@@ -54,24 +54,28 @@
     <div class="container">
         <h1>게임 선택</h1>
         <div class="game-list">
-          <div class="game-item" onclick="selectGame(1)">
-            <img src="game1.jpg" alt="게임 1">
-            <h3>게임 1</h3>
+          <div class="game-item" onclick="selectGame('side-scroll-game')">
+            <img src="resources/image/game.jpg" alt="Side scroll game">
+            <h3>Side scroll game</h3>
           </div>
-          <div class="game-item" onclick="selectGame(2)">
-            <img src="game2.jpg" alt="게임 2">
+          <!-- 
+            <div class="game-item" onclick="selectGame(2)">
+            <img src="resources/image/game.jpg" alt="게임 2">
             <h3>게임 2</h3>
           </div>
           <div class="game-item" onclick="selectGame(3)">
-            <img src="game3.jpg" alt="게임 3">
+            <img src="resources/image/game.jpg" alt="게임 3">
             <h3>게임 3</h3>
-          </div>
+          </div> 
+        -->
         </div>
       </div>
       <script>
         function selectGame(gameId) {
           // 게임 선택 시 처리할 로직 작성
           console.log('게임 ' + gameId + ' 선택됨');
+          // page 이동
+          location.href = "./page/" + gameId + ".html";
         }
       </script>
 
