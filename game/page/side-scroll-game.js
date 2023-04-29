@@ -1,20 +1,31 @@
 /**
- * Color
+ * Color 공통 컬러
  */
-colorBackground = "#0099FF";
+const colorBackground = "#0099FF";
+
+/**
+ * Common 공통 숫자
+ */
+const commonInt1 = 1;
+const commonInt2 = 2;
+const commonInt3 = 3;
+const commonInt4 = 4;
+const commonInt5 = 5;
 
 
 /**
  * Canvas
  */
+const canvasWidth = 800;
+const canvasHeight = 400;
 
 // canvas
 const canvas = document.getElementById("canvas");
 let context = canvas.getContext("2d");
 
 // size
-canvas.width = 800; // window.innerWidth - 100;
-canvas.height = 400; //window.innerHeight - 100;
+canvas.width = canvasWidth; // window.innerWidth - 100;
+canvas.height = canvasHeight; //window.innerHeight - 100;
 
 // style
 context.fillStyle = colorBackground;
@@ -118,19 +129,64 @@ function frameAnimation() {
 
 }
 
-
 /**
  * Key event
  */
 document.addEventListener("keypress", function(e) {
+    console.log("key code : "+e.code);
     
-    if (!play) return;
+    if (!play) {
 
-    if ( e.code == 'Space' ) {
-        e.preventDefault(); // scroll
-        let cannonball = new Cannonball(here.x, here.y+15);
-        cannonball.draw();
-        cannonballs.push(cannonball);
+    } else {
+        if ( e.code == 'Space' ) {
+            e.preventDefault(); // scroll
+            let cannonball = new Cannonball(here.x, here.y+15);
+            cannonball.draw();
+            cannonballs.push(cannonball);
+        } 
+        else if ( e.code == "KeyW" ) {
+            if(here.y > 0) here.y -= commonInt5;
+        } else if ( e.code == "KeyS" ) {
+            if (here.y < canvasHeight - here.height) here.y += commonInt5;
+        } else if ( e.code == "KeyA" ) {
+            if(here.x > 0) here.x -= commonInt5;
+        } else if ( e.code == "KeyD" ) {
+            if(here.x < canvasWidth - here.width) here.x += commonInt5;
+        }
     }
 
 }); 
+
+document.addEventListener("keyup", function(e) {
+    if (!play) return;
+    console.log("key code : "+e.code);
+
+    let distance = commonInt3;
+
+    if ( e.code == "KeyW" ) {
+        if(here.y > 0) here.y -= distance;
+    } else if ( e.code == "KeyS" ) {
+        if (here.y < canvasHeight - here.height) here.y += distance;
+    } else if ( e.code == "KeyA" ) {
+        if(here.x > 0) here.x -= distance;
+    } else if ( e.code == "KeyD" ) {
+        if(here.x < canvasWidth - here.width) here.x += distance;
+    }
+
+})
+document.addEventListener("keydown", function(e) {
+    if (!play) return;
+    console.log("key code : "+e.code);
+
+    let distance = commonInt3;
+
+    if ( e.code == "KeyW" ) {
+        if(here.y > 0) here.y -= distance;
+    } else if ( e.code == "KeyS" ) {
+        if (here.y < canvasHeight - here.height) here.y += distance;
+    } else if ( e.code == "KeyA" ) {
+        if(here.x > 0) here.x -= distance;
+    } else if ( e.code == "KeyD" ) {
+        if(here.x < canvasWidth - here.width) here.x += distance;
+    }
+})
