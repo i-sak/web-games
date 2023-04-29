@@ -102,6 +102,34 @@ class Cannonball {
     }
 }
 
+/**
+ * Effect
+ */
+let cannonEffect = {
+    width : 10,
+    height : 20,
+    boom : true,
+    draw() {
+        if (this.boom) {
+            // x, y, width, height
+            context.fillStyle = "yellow";
+            context.fillRect(here.x - 10, here.y + 5, 10, 20);
+            context.fillStyle = "red";
+            context.fillRect(here.x - 15, here.y + 5, 10, 20);
+
+            context.fillStyle = "yellow";
+            context.fillRect(here.x -20, here.y + 5, 10, 20);
+            context.fillStyle = "red";
+            context.fillRect(here.x - 30, here.y + 5, 10, 20);
+
+            context.fillStyle = "yellow";
+            context.fillRect(here.x + 50, here.y + 10, 10, 10);
+        }
+        this.boom = false;
+    }
+}
+
+
 
 /**
  * FPS Animation (loop)
@@ -114,7 +142,6 @@ function frameAnimation() {
     context.fillStyle = colorBackground;
     context.fillRect(0,0,canvas.width, canvas.height);
 
-
     cannonballs.forEach((object, index, array) => {
         if (object.x > 800) {
             array.splice(index, 1);
@@ -122,11 +149,12 @@ function frameAnimation() {
         object.x += 5;
 
         object.draw();
+
     })
     // console.log(cannonballs.length)
 
     here.draw();
-
+    cannonEffect.draw();
 }
 
 /**
@@ -141,10 +169,9 @@ document.addEventListener("keypress", function(e) {
         if ( e.code == 'Space' ) {
             e.preventDefault(); // scroll
             let cannonball = new Cannonball(here.x, here.y+15);
-            cannonball.draw();
             cannonballs.push(cannonball);
-        } 
-        else if ( e.code == "KeyW" ) {
+            cannonEffect.boom = true;
+        } else if ( e.code == "KeyW" ) {
             if(here.y > 0) here.y -= commonInt5;
         } else if ( e.code == "KeyS" ) {
             if (here.y < canvasHeight - here.height) here.y += commonInt5;
