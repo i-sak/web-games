@@ -97,17 +97,22 @@ class Cannonball {
  */
 function frameAnimation() {
     animation = requestAnimationFrame(frameAnimation);
-    console.log(animation);
+    // console.log(animation);
     
     context.clearRect(0, 0, canvas.width, canvas.height)
     context.fillStyle = colorBackground;
     context.fillRect(0,0,canvas.width, canvas.height);
 
 
-    cannonballs.forEach(object => {
+    cannonballs.forEach((object, index, array) => {
+        if (object.x > 800) {
+            array.splice(index, 1);
+        }
         object.x += 5;
+
         object.draw();
     })
+    // console.log(cannonballs.length)
 
     here.draw();
 
