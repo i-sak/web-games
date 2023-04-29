@@ -1,4 +1,10 @@
 /**
+ * Color
+ */
+colorBackground = "#0099FF";
+
+
+/**
  * Canvas
  */
 
@@ -11,15 +17,25 @@ canvas.width = 800; // window.innerWidth - 100;
 canvas.height = 400; //window.innerHeight - 100;
 
 // style
-context.fillStyle = "#0099FF";
+context.fillStyle = colorBackground;
 context.fillRect(0,0,canvas.width, canvas.height);
 
 /**
  * Character
  */
-let image1 = new Image();
-image1.src = "hero-bazooka.png";
+let heroImage = new Image();
+heroImage.src = "hero-bazooka.png";
+let here = {
+    x : 10,
+    y : 175,
+    width : 50,
+    height : 50,
+    draw() {
+        drawImage1();
+    }
+}
 
+let cannonballs = [];
 
 // button
 const startButton = document.getElementById("startButton");
@@ -29,7 +45,7 @@ startButton.addEventListener("click", function() {
 
     togglePlayStatus();
     startGame();
-
+    frameAnimation(); // loop fps
 });
 
 /**
@@ -55,6 +71,61 @@ const startGame = () => {
  * Draw
  */
 const drawImage1 = () => {
-    context.drawImage(image1, 10, 175, 50, 50);
+    context.drawImage(heroImage, here.x, here.y, here.width, here.height);
 }
 
+/**
+ * Cannonball
+ */
+class Cannonball {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;    
+    }
+    draw() {
+        context.beginPath();
+        context.arc(this.x, this.y, 5, 0, Math.PI * 2);
+        context.fillStyle = "#ff0000";
+        context.fill();
+        context.stroke();
+    }
+}
+
+
+/**
+ * FPS Animation (loop)
+ */
+function frameAnimation() {
+    animation = requestAnimationFrame(frameAnimation);
+    console.log(animation);
+    
+    context.clearRect(0, 0, canvas.width, canvas.height)
+    context.fillStyle = colorBackground;
+    context.fillRect(0,0,canvas.width, canvas.height);
+
+
+    cannonballs.forEach(object => {
+        object.x += 5;
+        object.draw();
+    })
+
+    here.draw();
+
+}
+
+
+/**
+ * Key event
+ */
+document.addEventListener("keypress", function(e) {
+    
+    if (!play) return;
+
+    if ( e.code == 'Space' ) {
+        e.preventDefault(); // scroll
+        let cannonball = new Cannonball(here.x, here.y+15);
+        cannonball.draw();
+        cannonballs.push(cannonball);
+    }
+
+}); 
