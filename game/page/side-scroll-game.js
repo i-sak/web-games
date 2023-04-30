@@ -37,7 +37,7 @@ context.fillRect(0,0,canvas.width, canvas.height);
 let heroImage = new Image();
 heroImage.src = "hero-bazooka.png";
 let enemyImage = new Image();
-enemyImage = "enemy.png";
+enemyImage.src = "enemy.png";
 
 /**
  * Variable
@@ -51,7 +51,7 @@ let timer = 0;
 /**
  * Character
  */
-let here = {
+let hero = {
     x : 10,
     y : 175,
     width : 50,
@@ -92,7 +92,7 @@ const startGame = () => {
  * Draw
  */
 const drawImage1 = () => {
-    context.drawImage(heroImage, here.x, here.y, here.width, here.height);
+    context.drawImage(heroImage, hero.x, hero.y, hero.width, hero.height);
 }
 
 /**
@@ -122,17 +122,17 @@ let cannonEffect = {
         if (this.boom) {
             // x, y, width, height
             context.fillStyle = "yellow";
-            context.fillRect(here.x - 10, here.y + 7, 10, 10);
+            context.fillRect(hero.x - 10, hero.y + 7, 10, 10);
             context.fillStyle = "red";
-            context.fillRect(here.x - 15, here.y + 7, 10, 10);
+            context.fillRect(hero.x - 15, hero.y + 7, 10, 10);
 
             context.fillStyle = "yellow";
-            context.fillRect(here.x -20, here.y + 7, 10, 10);
+            context.fillRect(hero.x -20, hero.y + 7, 10, 10);
             context.fillStyle = "red";
-            context.fillRect(here.x - 30, here.y + 7, 10, 10);
+            context.fillRect(hero.x - 30, hero.y + 7, 10, 10);
 
             context.fillStyle = "yellow";
-            context.fillRect(here.x + 50, here.y + 10, 10, 10);
+            context.fillRect(hero.x + 50, hero.y + 10, 10, 10);
         }
         this.boom = false;
     }
@@ -143,14 +143,14 @@ let cannonEffect = {
  */
 class Enemy {
     constructor () {
-        this.x = 300// canvasWidth - 50;
-        this.y = 300//Math.floor( ( (Math.random() * (canvasHeight - 50) ) + 50))
+        this.x = canvasWidth - 50;
+        this.y = canvasHeight - Math.floor( ( (Math.random() * (canvasHeight - 50) ) + 50))
         this.width = 50;
         this.height = 50;
     }
     draw() {
         if (!play) return;
-        
+        context.drawImage(enemyImage, this.x, this.y, 50, 50)
     }
 }
 
@@ -167,21 +167,20 @@ function frameAnimation() {
     context.fillStyle = colorBackground;
     context.fillRect(0,0,canvas.width, canvas.height);
 
-    if (timer % 50 === 0) {
+    if (timer % 200 === 0) {
         let createdEnemy = new Enemy();
         enemys.push(createdEnemy);
     }
-
+    
     enemys.forEach((object, index, array) => {
-        
-        // if (object.x < 0) {
-        //     array.splice(index, 1);
-        // }
-        // object.x -= 1;
-        // object.draw();
+
+        if (object.x < 0) {
+            array.splice(index, 1);
+        }
+        object.x -= 1;
         object.draw();
     })
-
+    console.log(enemys.length)
 
     cannonballs.forEach((object, index, array) => {
         if (object.x > 800) {
@@ -196,7 +195,7 @@ function frameAnimation() {
 
     // console.log(cannonballs.length)
 
-    here.draw();
+    hero.draw();
     cannonEffect.draw();
 }
 
@@ -211,17 +210,17 @@ document.addEventListener("keypress", function(e) {
     } else {
         if ( e.code == 'Space' ) {
             e.preventDefault(); // scroll
-            let cannonball = new Cannonball(here.x, here.y+15);
+            let cannonball = new Cannonball(hero.x, hero.y+15);
             cannonballs.push(cannonball);
             cannonEffect.boom = true;
         } else if ( e.code == "KeyW" ) {
-            if(here.y > 0) here.y -= commonInt5;
+            if(hero.y > 0) hero.y -= commonInt5;
         } else if ( e.code == "KeyS" ) {
-            if (here.y < canvasHeight - here.height) here.y += commonInt5;
+            if (hero.y < canvasHeight - hero.height) hero.y += commonInt5;
         } else if ( e.code == "KeyA" ) {
-            if(here.x > 0) here.x -= commonInt5;
+            if(hero.x > 0) hero.x -= commonInt5;
         } else if ( e.code == "KeyD" ) {
-            if(here.x < canvasWidth - here.width) here.x += commonInt5;
+            if(hero.x < canvasWidth - hero.width) hero.x += commonInt5;
         }
     }
 
@@ -234,13 +233,13 @@ document.addEventListener("keyup", function(e) {
     let distance = commonInt3;
 
     if ( e.code == "KeyW" ) {
-        if(here.y > 0) here.y -= distance;
+        if(hero.y > 0) hero.y -= distance;
     } else if ( e.code == "KeyS" ) {
-        if (here.y < canvasHeight - here.height) here.y += distance;
+        if (hero.y < canvasHeight - hero.height) hero.y += distance;
     } else if ( e.code == "KeyA" ) {
-        if(here.x > 0) here.x -= distance;
+        if(hero.x > 0) hero.x -= distance;
     } else if ( e.code == "KeyD" ) {
-        if(here.x < canvasWidth - here.width) here.x += distance;
+        if(hero.x < canvasWidth - hero.width) hero.x += distance;
     }
 
 })
@@ -251,12 +250,12 @@ document.addEventListener("keydown", function(e) {
     let distance = commonInt3;
 
     if ( e.code == "KeyW" ) {
-        if(here.y > 0) here.y -= distance;
+        if(hero.y > 0) hero.y -= distance;
     } else if ( e.code == "KeyS" ) {
-        if (here.y < canvasHeight - here.height) here.y += distance;
+        if (hero.y < canvasHeight - hero.height) hero.y += distance;
     } else if ( e.code == "KeyA" ) {
-        if(here.x > 0) here.x -= distance;
+        if(hero.x > 0) hero.x -= distance;
     } else if ( e.code == "KeyD" ) {
-        if(here.x < canvasWidth - here.width) here.x += distance;
+        if(hero.x < canvasWidth - hero.width) hero.x += distance;
     }
 })
