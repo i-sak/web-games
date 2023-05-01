@@ -147,15 +147,29 @@ class Enemy {
         this.y = canvasHeight - Math.floor( ( (Math.random() * (canvasHeight - 50) ) + 50))
         this.width = 50;
         this.height = 50;
+        this.hp = 0;
     }
     draw() {
         if (!play) return;
         context.drawImage(enemyImage, this.x, this.y, this.width, this.height);
         
+        // hp bar
         context.fillStyle = "red";
-        context.fillRect(this.x, this.y - 10, this.width, this.height - 40);
+        context.fillRect(this.x, this.y - 10, this.width - this.hp, this.height - 40);
     }
 }
+
+// Check Collision
+// 총알이 나가는 중에 충돌 체크
+function checkCollision(object, objects) {
+    let collision = false;
+    
+    objects.forEach(function(arrayObject) {
+
+    })
+
+}
+
 
 
 /****************************************************************************************************
@@ -183,19 +197,21 @@ function frameAnimation() {
         object.x -= 1;
         object.draw();
     })
-    console.log(enemys.length)
 
+    // 내가 쏘는 대포알
     cannonballs.forEach((object, index, array) => {
         if (object.x > 800) {
             array.splice(index, 1);
         }
         object.x += 5;
+        
+        // 실시간 충돌 감지 : 총알과 적의 충돌 감지
+        checkCollision(object, enemys);
 
         object.draw();
     })
 
     
-
     hero.draw();
     cannonEffect.draw();
 }
