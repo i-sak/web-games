@@ -150,12 +150,15 @@ class Enemy {
     }
     draw() {
         if (!play) return;
-        context.drawImage(enemyImage, this.x, this.y, 50, 50)
+        context.drawImage(enemyImage, this.x, this.y, this.width, this.height);
+        
+        context.fillStyle = "red";
+        context.fillRect(this.x, this.y - 10, this.width, this.height - 40);
     }
 }
 
 
-/**
+/****************************************************************************************************
  * FPS Animation (loop)
  */
 function frameAnimation() {
@@ -167,7 +170,7 @@ function frameAnimation() {
     context.fillStyle = colorBackground;
     context.fillRect(0,0,canvas.width, canvas.height);
 
-    if (timer % 200 === 0) {
+    if (timer % 200 === 1) {
         let createdEnemy = new Enemy();
         enemys.push(createdEnemy);
     }
@@ -193,11 +196,11 @@ function frameAnimation() {
 
     
 
-    // console.log(cannonballs.length)
-
     hero.draw();
     cannonEffect.draw();
 }
+// ****************************************************************************************************
+
 
 /**
  * Key event
