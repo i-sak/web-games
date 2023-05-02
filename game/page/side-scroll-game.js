@@ -148,10 +148,11 @@ class Enemy {
         this.y = canvasHeight - Math.floor( ( (Math.random() * (canvasHeight - 50) ) + 50))
         this.width = 50;
         this.height = 50;
-        this.hp = 0;
+        this.hp = 0;    // 50; die 조건
     }
     draw() {
         if (!play) return;
+
         context.drawImage(enemyImage, this.x, this.y, this.width, this.height);
         
         // hp bar
@@ -164,7 +165,7 @@ class Enemy {
 // 총알이 나가는 중에 충돌 체크
 function checkCollision(object, objects) {
     let collision = false;
-    objects.forEach(function(arrayObject) {
+    objects.forEach(function(arrayObject, index) {
         if 
         (
             (object.x + (object.radius * 2) > arrayObject.x - (arrayObject.width / 2))
@@ -177,6 +178,11 @@ function checkCollision(object, objects) {
             context.fillStyle = "blue";
             context.fillRect(object.x + (object.radius * 2) + 5, object.y - 5, 20, 10);
             // alert(object.y + "  " + arrayObject.y)
+            enemys[index].hp += 1;
+            if (enemys[index].hp >= 50) {   // 누적 데미지 
+                enemys.splice(index, 1);
+            }
+
             collision = true;
         }
 
@@ -226,11 +232,11 @@ function frameAnimation() {
 
         if (collision) {
             array.splice(index, 1);
+
         }
 
 
     })
-
     
     hero.draw();
     cannonEffect.draw();
