@@ -101,11 +101,12 @@ const drawImage1 = () => {
 class Cannonball {
     constructor(x, y) {
         this.x = x;
-        this.y = y;    
+        this.y = y;
+        this.radius = 5;
     }
     draw() {
         context.beginPath();
-        context.arc(this.x + 50, this.y, 5, 0, Math.PI * 2);
+        context.arc(this.x + 50, this.y, this.radius, 0, Math.PI * 2);
         context.fillStyle = "#ff0000";
         context.fill();
         context.stroke();
@@ -163,8 +164,22 @@ class Enemy {
 // 총알이 나가는 중에 충돌 체크
 function checkCollision(object, objects) {
     let collision = false;
-    
+
     objects.forEach(function(arrayObject) {
+        if 
+        (
+            (object.x + (object.radius * 2) > arrayObject.x - (arrayObject.width / 2))
+            &&
+            (object.x + (object.radius * 2) < arrayObject.x + (arrayObject.width / 2 ) - 10)
+            &&
+            ((object.y > arrayObject.y ) && (object.y < arrayObject.y + arrayObject.height)) 
+        )
+        {
+            context.fillStyle = "blue";
+            context.fillRect(object.x + (object.radius * 2), object.y, 10, 10);
+            // alert(object.y + "  " + arrayObject.y)
+            
+        }
 
     })
 
@@ -203,7 +218,7 @@ function frameAnimation() {
         if (object.x > 800) {
             array.splice(index, 1);
         }
-        object.x += 5;
+        object.x += 10;
         
         // 실시간 충돌 감지 : 총알과 적의 충돌 감지
         checkCollision(object, enemys);
