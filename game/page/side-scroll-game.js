@@ -164,7 +164,6 @@ class Enemy {
 // 총알이 나가는 중에 충돌 체크
 function checkCollision(object, objects) {
     let collision = false;
-
     objects.forEach(function(arrayObject) {
         if 
         (
@@ -176,13 +175,13 @@ function checkCollision(object, objects) {
         )
         {
             context.fillStyle = "blue";
-            context.fillRect(object.x + (object.radius * 2), object.y, 10, 10);
+            context.fillRect(object.x + (object.radius * 2) + 5, object.y - 5, 20, 10);
             // alert(object.y + "  " + arrayObject.y)
-            
+            collision = true;
         }
 
     })
-
+    return collision;
 }
 
 
@@ -221,9 +220,15 @@ function frameAnimation() {
         object.x += 10;
         
         // 실시간 충돌 감지 : 총알과 적의 충돌 감지
-        checkCollision(object, enemys);
+        let collision = checkCollision(object, enemys);
 
         object.draw();
+
+        if (collision) {
+            array.splice(index, 1);
+        }
+
+
     })
 
     
