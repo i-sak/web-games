@@ -250,7 +250,7 @@ function frameAnimation() {
  * Key event
  */
 document.addEventListener("keypress", function(e) {
-    console.log("key code : "+e.code);
+    // console.log("key code : "+e.code);
     
     if (!play) {
 
@@ -275,7 +275,7 @@ document.addEventListener("keypress", function(e) {
 
 document.addEventListener("keyup", function(e) {
     if (!play) return;
-    console.log("key code : "+e.code);
+    // console.log("key code : "+e.code);
 
     let distance = commonInt3;
 
@@ -292,7 +292,7 @@ document.addEventListener("keyup", function(e) {
 })
 document.addEventListener("keydown", function(e) {
     if (!play) return;
-    console.log("key code : "+e.code);
+    // console.log("key code : "+e.code);
 
     let distance = commonInt3;
 
