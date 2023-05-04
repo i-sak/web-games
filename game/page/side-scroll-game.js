@@ -61,7 +61,14 @@ let hero = {
         drawImage1();
     }
 }
-
+/**
+ * Hero Draw
+ */
+const drawImage1 = () => {
+    context.drawImage(heroImage, hero.x, hero.y, hero.width, hero.height);
+    context.fillStyle = "#DB72BD";
+    context.fillRect(hero.x, hero.y - 10, hero.width, hero.height - 40);
+}
 
 // button
 const startButton = document.getElementById("startButton");
@@ -89,12 +96,6 @@ const startGame = () => {
     }
 }
 
-/**
- * Draw
- */
-const drawImage1 = () => {
-    context.drawImage(heroImage, hero.x, hero.y, hero.width, hero.height);
-}
 
 /**
  * Cannonball
@@ -180,6 +181,9 @@ function checkCollision(object, objects) {
             context.fillRect(object.x + (object.radius * 2) + 5, object.y - 5, 20, 10);
             // alert(object.y + "  " + arrayObject.y)
             enemys[index].damage += hero.power;
+            
+            enemys[index].x += 1;   // 밀림, 넉백 효과 
+
 
             if (enemys[index].damage >= 50) {   // 누적 데미지 
                 enemys.splice(index, 1);
@@ -199,13 +203,20 @@ function checkCollision(object, objects) {
  */
 function frameAnimation() {
     animation = requestAnimationFrame(frameAnimation);
-    // console.log(animation);
+
     timer ++;
 
+    // display canvas
     context.clearRect(0, 0, canvas.width, canvas.height)
     context.fillStyle = colorBackground;
     context.fillRect(0,0,canvas.width, canvas.height);
 
+    // display timer
+    context.fillStyle = "white";
+    context.fillText("timer : " + timer, canvasWidth / 2 , 10);
+
+
+    // 적 생성
     if (timer % 200 === 1) {
         let createdEnemy = new Enemy();
         enemys.push(createdEnemy);
