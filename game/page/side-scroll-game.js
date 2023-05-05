@@ -42,8 +42,8 @@ enemyImage.src = "enemy.png";
 /**
  * Variable
  */
+let score = 0;
 let play = false; // Status
-
 let cannonballs = [];
 let enemys = [];
 let timer = 0;
@@ -187,6 +187,9 @@ function checkCollision(object, objects) {
 
             if (enemys[index].damage >= 50) {   // 누적 데미지 
                 enemys.splice(index, 1);
+
+                // score +10
+                score += 10;
             }
 
             collision = true;
@@ -215,6 +218,8 @@ function frameAnimation() {
     context.fillStyle = "white";
     context.fillText("timer : " + timer, canvasWidth / 2 , 10);
 
+    // display score
+    context.fillText("score : " + score, canvasWidth - 50, 10);
 
     // 적 생성
     if (timer % 200 === 1) {
